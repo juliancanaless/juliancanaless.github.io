@@ -1,0 +1,144 @@
+%-------------------------
+% Julian Canales — Resume (one page)
+% pdflatex JulianCanales_Resume.tex
+%-------------------------
+\documentclass[letterpaper,10.5pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.5in, top=0.35in, bottom=0.35in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\definecolor{linkblue}{HTML}{2563EB}
+\hypersetup{colorlinks=true,urlcolor=linkblue,pdfauthor={Julian Canales}}
+
+% Section heading
+\renewcommand{\section}[1]{%
+  \vspace{0.5em}%
+  {\normalsize\bfseries\scshape #1}%
+  \vspace{-0.5em}%
+  \par\noindent\rule{\textwidth}{0.4pt}%
+  \vspace{0.15em}%
+}
+
+% Tight itemize
+\let\olditemize\itemize
+\let\oldenditemize\enditemize
+\renewenvironment{itemize}{%
+  \olditemize
+  \setlength{\itemsep}{1pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\topsep}{1.5pt}%
+  \setlength{\leftmargin}{1.2em}%
+}{\oldenditemize}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+  {\large\bfseries Julian Canales} \\[2pt]
+  {\small 832-931-1132 \enspace$\vert$\enspace
+  \href{mailto:juliancanales@utexas.edu}{juliancanales@utexas.edu} \enspace$\vert$\enspace
+  San Francisco, CA \enspace$\vert$\enspace
+  \href{https://github.com/juliancanaless}{GitHub} \enspace$\vert$\enspace
+  \href{https://www.linkedin.com/in/juliancanales05/}{LinkedIn}}
+\end{center}
+
+%----------EDUCATION----------
+\section{Education}
+
+{\small
+\textbf{The University of Texas at Austin} --- M.S.\ Artificial Intelligence (online) \hfill Aug 2025 -- May 2027 \\
+Coursework: Machine Learning, Online Learning \& Optimization, Deep Learning
+
+\vspace{3pt}
+\textbf{The University of Texas at Austin} --- B.S.\ Computer Science \& Mathematics \hfill May 2025 \enspace$\vert$\enspace GPA: 3.65 \\
+\textit{Awards:} QuestBridge Scholar, HSF Scholar, University Honors \\
+\textit{Activities:} Directed Reading Program, Texas Blockchain, CS Internal Transfer Program \\
+\textit{Coursework:} Principles of ML, Distributed Computing, Concurrency (Honors), Geometric Foundations of Data Science, Quantum Info Sci, Real Analysis I--II, Stochastic Processes I (Grad), Predictive Analytics, Game Theory
+}
+
+%----------EXPERIENCE----------
+\section{Experience}
+
+{\small
+\textbf{Avathon} \enspace$\vert$\enspace Data Scientist \hfill Oct 2025 -- Present
+\begin{itemize}
+  \item Built AI-oriented microservices and agent workflows for internal infrastructure, focusing on reliability and extensibility.
+  \item Built an AI agent fluent in the knowledge graph's query language (IQL) with tools for schema discovery, graph traversal, and embeddings-backed search; required deep research into the CKG codebase to surface undocumented capabilities and validate embedding pipelines.
+  \item Worked full-stack on a transport management system, including resource-selection config and operational logic.
+  \item Pitched and helped adopt DBOS for workflow durability and orchestration across services.
+  \item Integrated Langfuse for AI observability; continuing work on AI infrastructure, frontend architecture, and DevOps.
+\end{itemize}
+
+\textbf{IBM} \enspace$\vert$\enspace Data Science Intern \hfill May -- Aug 2023
+\begin{itemize}
+  \item Built and deployed a Flask POC integrating Watson Assistant with Db2; helped close a client deal.
+  \item Created a 1.5k-LOC Dash app backed by watsonx, Discovery, and a custom eval API for LLM comparisons.
+  \item Owned backend API integration for a React + Flask onboarding MVP on IBM Cloud and OpenShift.
+\end{itemize}
+
+\textbf{UT Austin} \enspace$\vert$\enspace Undergraduate Researcher, Earthquake Modeling \hfill Jan -- May 2024
+\begin{itemize}
+  \item Re-engineered a legacy Mathematica SDOF solver into a multithreaded Python pipeline.
+  \item Processed 29k+ NGA-West2 records; ran 64-vCPU GCP sweeps, cutting runtime from $\approx$3\,yrs to $\approx$2\,wks.
+  \item Produced interactive Plotly dashboards and a seminar deck for faculty presentation.
+\end{itemize}
+}
+
+%----------PROJECTS----------
+\section{Selected Projects}
+
+{\small
+\textbf{Crabs AI Assistant} \enspace$\vert$\enspace \textit{OpenClaw, LightRAG, CouchDB} \hfill 2026
+\begin{itemize}
+  \item Self-hosted AI assistant running on a Hetzner VPS with CouchDB syncing an Obsidian vault across devices.
+  \item Two-tiered memory system: short-term conversational recall via OpenClaw and long-term knowledge graph traversal via LightRAG; zero-guessing policy forces the agent to always search actual notes instead of relying on pre-trained weights.
+\end{itemize}
+
+\textbf{Adaptive DQN Planner} \enspace$\vert$\enspace \textit{RL, DQN, CEM, Python} \hfill 2025
+\begin{itemize}
+  \item Built an RL agent for autonomous driving in a roundabout simulator, pairing DQN with a CEM optimizer and k-NN error tracker to adapt uncertainty estimates during planning.
+  \item Achieved 0\% collisions and +17\% safety margin over deterministic baselines across 20 evaluation runs.
+\end{itemize}
+
+\textbf{CUDA K-Means / K-Means++} \enspace$\vert$\enspace \textit{CUDA, C++} \hfill 2025
+\begin{itemize}
+  \item Implemented 4 GPU-accelerated K-Means variants including shared memory and K-Means++ initialization; benchmarked on dual Quadro RTX 6000s, achieving 14x speedup on 1M$\times$32D datasets.
+\end{itemize}
+
+\textbf{GPU Fine-Grained Sync for EM} \enspace$\vert$\enspace \textit{CUDA, Distributed Systems} \hfill 2025
+\begin{itemize}
+  \item Recreated and extended Wang et al.\ (ASPLOS '19) fine-grained GPU synchronization using a client-server design with shared-memory buffers; benchmarked on counters, hash tables, and EM for GMMs.
+\end{itemize}
+
+\textbf{Fantasy Draft RL Agent} \enspace$\vert$\enspace \textit{Python, PyTorch, Gymnasium} \hfill 2024
+\begin{itemize}
+  \item Built a custom Gymnasium environment modeling 12-team snake drafts with 300+ players, action masking, and roster-aware observations; trained Maskable-PPO across multiple NFL seasons, outperforming heuristic baselines by 26--42\%.
+\end{itemize}
+
+\textbf{Black-Scholes Derivation Paper} \enspace$\vert$\enspace \textit{Probability, Measure Theory, Stochastic Calculus} \hfill 2024
+\begin{itemize}
+  \item Wrote a self-contained derivation of Black-Scholes for European call options from first principles, covering measure theory, martingales, Brownian motion, and connecting the PDE framework to practical asset pricing.
+\end{itemize}
+}
+
+%----------SKILLS----------
+\section{Skills}
+
+{\small
+\textbf{Languages:} Python, SQL, C/C++, CUDA C, TypeScript, Bash \enspace$\vert$\enspace \textit{Familiar:} Java, Go, Rust, R \\
+\textbf{AI \& Agents:} LLM APIs (OpenAI, Anthropic, Google), agent orchestration \& tooling, prompt engineering, RAG pipelines, LiteLLM, ChromaDB, LightRAG, Langfuse, model routing \& compatibility, streaming/thinking pipelines \\
+\textbf{ML \& Data:} PyTorch, scikit-learn, pandas, NumPy, SciPy, Gymnasium, Stable-Baselines3, Matplotlib/Plotly \\
+\textbf{Web \& APIs:} Flask, FastAPI, Django, React, Next.js, REST APIs, Dash, Tailwind CSS, SSE/WebSockets \\
+\textbf{Infra \& Tools:} AWS (EC2/S3), GCP, Docker, Git, Kubernetes, OpenMP/MPI, GPU profiling (nvprof/nsight) \\
+\textbf{Spoken:} English (native), Spanish (native)
+}
+
+\end{document}
