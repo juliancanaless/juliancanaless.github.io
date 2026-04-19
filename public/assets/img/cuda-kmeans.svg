@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" style="background:#282828">
+  <style>
+    text { font-family: sans-serif; }
+    .title { fill: #ebdbb2; font-size: 22px; font-weight: bold; }
+    .accent { fill: #fe8019; }
+    .sub { fill: #a89984; font-size: 12px; }
+    .label { fill: #ebdbb2; font-size: 13px; text-anchor: middle; font-weight: 600; }
+    .speedup { fill: #b8bb26; font-size: 42px; font-weight: bold; }
+    .speedup-label { fill: #b8bb26; font-size: 14px; }
+  </style>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" class="title">CUDA K-Means Clustering</text>
+  <text x="400" y="60" text-anchor="middle" class="sub">shared memory optimization · dual RTX 6000</text>
+
+  <!-- GPU Grid - represents thread blocks -->
+  <g transform="translate(60, 90)">
+    <!-- Grid of "threads" -->
+    <g>
+      <!-- Block 1 - orange cluster -->
+      <rect x="0" y="0" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.8"/>
+      <rect x="26" y="0" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.6"/>
+      <rect x="52" y="0" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.9"/>
+      <rect x="78" y="0" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.7"/>
+      <rect x="0" y="26" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.5"/>
+      <rect x="26" y="26" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.8"/>
+      <rect x="52" y="26" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.6"/>
+      <rect x="78" y="26" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.9"/>
+      <rect x="0" y="52" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.7"/>
+      <rect x="26" y="52" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.5"/>
+      <rect x="52" y="52" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.8"/>
+      <rect x="78" y="52" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.6"/>
+      <rect x="0" y="78" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.9"/>
+      <rect x="26" y="78" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.7"/>
+      <rect x="52" y="78" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.5"/>
+      <rect x="78" y="78" width="22" height="22" rx="3" fill="#d65d0e" opacity="0.8"/>
+    </g>
+
+    <!-- Block 2 - green cluster -->
+    <g transform="translate(120, 0)">
+      <rect x="0" y="0" width="22" height="22" rx="3" fill="#98971a" opacity="0.8"/>
+      <rect x="26" y="0" width="22" height="22" rx="3" fill="#98971a" opacity="0.6"/>
+      <rect x="52" y="0" width="22" height="22" rx="3" fill="#98971a" opacity="0.9"/>
+      <rect x="78" y="0" width="22" height="22" rx="3" fill="#98971a" opacity="0.7"/>
+      <rect x="0" y="26" width="22" height="22" rx="3" fill="#98971a" opacity="0.5"/>
+      <rect x="26" y="26" width="22" height="22" rx="3" fill="#98971a" opacity="0.8"/>
+      <rect x="52" y="26" width="22" height="22" rx="3" fill="#98971a" opacity="0.6"/>
+      <rect x="78" y="26" width="22" height="22" rx="3" fill="#98971a" opacity="0.9"/>
+      <rect x="0" y="52" width="22" height="22" rx="3" fill="#98971a" opacity="0.7"/>
+      <rect x="26" y="52" width="22" height="22" rx="3" fill="#98971a" opacity="0.5"/>
+      <rect x="52" y="52" width="22" height="22" rx="3" fill="#98971a" opacity="0.8"/>
+      <rect x="78" y="52" width="22" height="22" rx="3" fill="#98971a" opacity="0.6"/>
+      <rect x="0" y="78" width="22" height="22" rx="3" fill="#98971a" opacity="0.9"/>
+      <rect x="26" y="78" width="22" height="22" rx="3" fill="#98971a" opacity="0.7"/>
+      <rect x="52" y="78" width="22" height="22" rx="3" fill="#98971a" opacity="0.5"/>
+      <rect x="78" y="78" width="22" height="22" rx="3" fill="#98971a" opacity="0.8"/>
+    </g>
+
+    <!-- Block 3 - yellow cluster -->
+    <g transform="translate(240, 0)">
+      <rect x="0" y="0" width="22" height="22" rx="3" fill="#d79921" opacity="0.8"/>
+      <rect x="26" y="0" width="22" height="22" rx="3" fill="#d79921" opacity="0.6"/>
+      <rect x="52" y="0" width="22" height="22" rx="3" fill="#d79921" opacity="0.9"/>
+      <rect x="78" y="0" width="22" height="22" rx="3" fill="#d79921" opacity="0.7"/>
+      <rect x="0" y="26" width="22" height="22" rx="3" fill="#d79921" opacity="0.5"/>
+      <rect x="26" y="26" width="22" height="22" rx="3" fill="#d79921" opacity="0.8"/>
+      <rect x="52" y="26" width="22" height="22" rx="3" fill="#d79921" opacity="0.6"/>
+      <rect x="78" y="26" width="22" height="22" rx="3" fill="#d79921" opacity="0.9"/>
+      <rect x="0" y="52" width="22" height="22" rx="3" fill="#d79921" opacity="0.7"/>
+      <rect x="26" y="52" width="22" height="22" rx="3" fill="#d79921" opacity="0.5"/>
+      <rect x="52" y="52" width="22" height="22" rx="3" fill="#d79921" opacity="0.8"/>
+      <rect x="78" y="52" width="22" height="22" rx="3" fill="#d79921" opacity="0.6"/>
+      <rect x="0" y="78" width="22" height="22" rx="3" fill="#d79921" opacity="0.9"/>
+      <rect x="26" y="78" width="22" height="22" rx="3" fill="#d79921" opacity="0.7"/>
+      <rect x="52" y="78" width="22" height="22" rx="3" fill="#d79921" opacity="0.5"/>
+      <rect x="78" y="78" width="22" height="22" rx="3" fill="#d79921" opacity="0.8"/>
+    </g>
+
+    <text x="170" y="125" text-anchor="middle" class="label">GPU thread blocks</text>
+  </g>
+
+  <!-- Arrow -->
+  <g transform="translate(440, 130)">
+    <line x1="0" y1="30" x2="60" y2="30" stroke="#a89984" stroke-width="2"/>
+    <polygon points="60,24 75,30 60,36" fill="#a89984"/>
+  </g>
+
+  <!-- Scatter plot - clustered points -->
+  <g transform="translate(530, 85)">
+    <!-- Orange cluster -->
+    <circle cx="30" cy="25" r="5" fill="#fe8019" opacity="0.9"/>
+    <circle cx="45" cy="15" r="5" fill="#fe8019" opacity="0.7"/>
+    <circle cx="20" cy="40" r="5" fill="#fe8019" opacity="0.8"/>
+    <circle cx="55" cy="35" r="5" fill="#fe8019" opacity="0.6"/>
+    <circle cx="35" cy="50" r="5" fill="#fe8019" opacity="0.9"/>
+    <circle cx="15" cy="20" r="5" fill="#fe8019" opacity="0.7"/>
+    <circle cx="50" cy="45" r="5" fill="#fe8019" opacity="0.8"/>
+    <!-- Centroid -->
+    <circle cx="35" cy="33" r="8" fill="none" stroke="#fe8019" stroke-width="2"/>
+
+    <!-- Green cluster -->
+    <circle cx="140" cy="80" r="5" fill="#b8bb26" opacity="0.9"/>
+    <circle cx="155" cy="65" r="5" fill="#b8bb26" opacity="0.7"/>
+    <circle cx="130" cy="95" r="5" fill="#b8bb26" opacity="0.8"/>
+    <circle cx="165" cy="90" r="5" fill="#b8bb26" opacity="0.6"/>
+    <circle cx="145" cy="105" r="5" fill="#b8bb26" opacity="0.9"/>
+    <circle cx="120" cy="75" r="5" fill="#b8bb26" opacity="0.7"/>
+    <circle cx="160" cy="100" r="5" fill="#b8bb26" opacity="0.8"/>
+    <circle cx="140" cy="80" r="8" fill="none" stroke="#b8bb26" stroke-width="2"/>
+
+    <!-- Yellow cluster -->
+    <circle cx="80" cy="120" r="5" fill="#fabd2f" opacity="0.9"/>
+    <circle cx="95" cy="110" r="5" fill="#fabd2f" opacity="0.7"/>
+    <circle cx="70" cy="135" r="5" fill="#fabd2f" opacity="0.8"/>
+    <circle cx="105" cy="130" r="5" fill="#fabd2f" opacity="0.6"/>
+    <circle cx="85" cy="145" r="5" fill="#fabd2f" opacity="0.9"/>
+    <circle cx="60" cy="120" r="5" fill="#fabd2f" opacity="0.7"/>
+    <circle cx="100" cy="140" r="5" fill="#fabd2f" opacity="0.8"/>
+    <circle cx="85" cy="130" r="8" fill="none" stroke="#fabd2f" stroke-width="2"/>
+
+    <text x="100" y="175" text-anchor="middle" class="label">clustered output</text>
+  </g>
+
+  <!-- Speedup stat -->
+  <g transform="translate(60, 310)">
+    <rect x="0" y="0" width="680" height="130" rx="16" fill="#3c3836" stroke="#504945" stroke-width="2"/>
+    
+    <text x="120" y="55" text-anchor="middle" class="speedup">14×</text>
+    <text x="120" y="80" text-anchor="middle" class="speedup-label">speedup vs CPU</text>
+
+    <line x1="240" y1="20" x2="240" y2="110" stroke="#504945" stroke-width="1"/>
+
+    <!-- Progress bars showing implementations -->
+    <text x="270" y="42" class="sub">CPU baseline</text>
+    <rect x="420" y="30" width="40" height="14" rx="4" fill="#a89984" opacity="0.4"/>
+    
+    <text x="270" y="65" class="sub">Basic CUDA</text>
+    <rect x="420" y="53" width="160" height="14" rx="4" fill="#d65d0e" opacity="0.6"/>
+    
+    <text x="270" y="88" class="sub">Shared memory</text>
+    <rect x="420" y="76" width="220" height="14" rx="4" fill="#fe8019" opacity="0.8"/>
+    
+    <text x="270" y="111" class="sub">+ K-Means++ init</text>
+    <rect x="420" y="99" width="230" height="14" rx="4" fill="#b8bb26"/>
+  </g>
+</svg>

@@ -1,0 +1,71 @@
+---
+title: "Building Crabs 🦀 — My Personal AI Assistant"
+description: "How I built a self-hosted AI assistant that actually knows what I'm working on, using OpenClaw, LightRAG, CouchDB, and my Obsidian vault."
+date: "2026-04-17"
+tags: ["AI", "Infrastructure", "Self-Hosted", "OpenClaw"]
+published: true
+---
+
+## Why
+
+I wanted more than a ChatGPT window that forgets who I am every time I close the tab. I wanted an AI assistant that lives on my server, is accessible from anywhere via Discord, and actually *knows* what I'm working on. It should be able to read my book notes, understand my coursework, and help me brainstorm on active projects without me copy-pasting context every single time.
+
+So I built "crabs 🦀" — a no-nonsense, server-native assistant powered by OpenClaw. Named after Mr. Krabs, obviously.
+
+Nothing in this architecture is groundbreaking computer science. The real breakthrough is **accessibility**. Between working full-time, taking two courses in the UT Austin OMSAI program, and trying to have a life, I don't have entire weekends to burn reading API docs. But by leveraging AI pair programming, a complex personal infrastructure build that would normally take weeks was dialed in over a few short evenings.
+
+## The Infrastructure
+
+The entire setup runs on a remarkably cheap Hetzner VPS (2 vCPUs) running Ubuntu 24.04.
+
+### Untethering Obsidian with CouchDB
+
+Instead of relying on expensive sync subscriptions, I deployed a self-hosted **CouchDB** instance on the VPS. Using the **Obsidian LiveSync** plugin, my vault syncs across laptop, phone, and any other device. A background service (`livesync-bridge.service`) pulls the latest markdown files into a server directory (`/srv/vault/`), so the AI always has real-time access to the exact same notes I'm typing on my phone.
+
+### The $20 Mistake
+
+The initial setup had a learning curve. I enabled OpenClaw's "heartbeat" feature thinking it'd be cool for the agent to proactively check in on things. What I didn't realize was how heavy those automated background context-windows were. The bot silently burned through $20 in API costs just talking to itself. Heartbeats: disabled. Lesson: learned.
+
+## The Architecture
+
+### The Brain: Gemma-4-31b-it
+
+Google's instruction-tuned model that natively reasons (outputting `<think>` blocks before answering). I configured OpenClaw to intercept and hide these thinking blocks from the Discord UI — I get the reasoning without the wall of text.
+
+### Two-Tiered Memory (the part I'm most proud of)
+
+If you just give an LLM access to thousands of markdown files, it chokes. I needed to separate "what we were just talking about" from "my permanent knowledge base."
+
+**Short-Term Memory (`memory_search`):**
+OpenClaw handles conversational memory. As Discord chats get long, its compaction engine summarizes older messages into daily markdown summaries. Follow-up questions the next day pull from these auto-generated summaries.
+
+**Long-Term Memory (LightRAG + Obsidian):**
+My actual "second brain" lives in `/srv/vault/`. LightRAG ingests my markdown files and builds a **knowledge graph** — not just keyword matching. When the agent runs `vault-search`, it uses "mix" mode: semantic vector search *and* graph traversal simultaneously.
+
+The graph traversal is where it shines. If I ask *"How do the themes from the books I read this year connect to my 2026 career goals?"*, LightRAG traverses entity relationships connecting reading logs to personal goals — cross-folder insights that keyword search would completely miss.
+
+### The Zero-Guessing Policy
+
+Smart models get lazy and rely on pre-trained weights when they think they already know something. The `SOUL.md` instruction set is draconian:
+
+1. **NEVER** answer using general pre-trained knowledge
+2. Always use `vault-search` first for my specific notes and context
+3. Only use `memory_search` for recent conversational context
+4. Obsidian vault is strictly read-only unless I explicitly say otherwise
+
+## When It Clicked
+
+I sent this prompt:
+> *"Use vault-search to find my 'Personal Reflection' on DDIA, and tell me how my takeaway connects to my technical career goals for 2026."*
+
+Checking the server logs:
+
+1. The agent recognized it couldn't answer from general knowledge (zero-guessing policy fired)
+2. It ran `memory_search` first — found nothing useful
+3. It *independently read its own config file* (`SKILL.md`) to relearn the `curl` syntax for vault search
+4. It hit LightRAG with `mode: mix`, triggering graph traversal
+5. LightRAG returned my note about p99 latency and premature optimization, cross-referenced it with my "ProtoBird" project, and realized ProtoBird is the exact empirical optimization that DDIA warned me to wait for
+
+It didn't summarize. It traversed a graph database, audited its own code, connected a textbook to my active GitHub repo, and replied in Discord within seconds.
+
+Less chatbot, more extension of my own brain.

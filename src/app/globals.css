@@ -1,0 +1,100 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: #282828;
+  --foreground: #ebdbb2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Gruvbox Dark palette */
+  --color-gb-bg0: #282828;
+  --color-gb-bg0-hard: #1d2021;
+  --color-gb-bg1: #3c3836;
+  --color-gb-bg2: #504945;
+  --color-gb-bg3: #665c54;
+  --color-gb-fg0: #fbf1c7;
+  --color-gb-fg1: #ebdbb2;
+  --color-gb-fg2: #d5c4a1;
+  --color-gb-fg3: #bdae93;
+  --color-gb-fg4: #a89984;
+  --color-gb-orange: #d65d0e;
+  --color-gb-orange-l: #fe8019;
+  --color-gb-yellow: #d79921;
+  --color-gb-yellow-l: #fabd2f;
+  --color-gb-green: #98971a;
+  --color-gb-green-l: #b8bb26;
+  --color-gb-aqua: #689d6a;
+  --color-gb-aqua-l: #8ec07c;
+  --color-gb-red: #cc241d;
+  --color-gb-purple: #b16286;
+  --color-gb-purple-l: #d3869b;
+  --color-gb-blue: #458588;
+  --color-gb-blue-l: #83a598;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgb(214 93 14 / 0.12), transparent 30%),
+    radial-gradient(circle at 20% 20%, rgb(254 128 25 / 0.06), transparent 25%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-gb-bg2;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-gap {
+    @apply py-20 sm:py-24;
+  }
+
+  .glass-card {
+    @apply rounded-3xl border border-gb-fg4/15 bg-gb-bg1/60 shadow-2xl shadow-gb-bg0/40 backdrop-blur;
+  }
+
+  .section-heading {
+    @apply text-3xl font-semibold tracking-tight text-gb-fg0 sm:text-4xl;
+  }
+
+  .section-copy {
+    @apply mt-3 max-w-2xl text-base leading-7 text-gb-fg3 sm:text-lg;
+  }
+
+  .pill {
+    @apply inline-flex items-center rounded-full border border-gb-orange/30 bg-gb-orange/10 px-3 py-1 text-sm font-medium text-gb-orange-l;
+  }
+
+  .nav-link {
+    @apply rounded-full px-3 py-2 text-sm text-gb-fg3 hover:bg-gb-fg4/10 hover:text-gb-fg1;
+  }
+
+  .prose-blog {
+    @apply prose prose-invert max-w-none prose-headings:text-gb-fg0 prose-p:text-gb-fg2 prose-li:text-gb-fg2 prose-strong:text-gb-fg1 prose-a:text-gb-orange-l;
+  }
+}

@@ -1,0 +1,95 @@
+---
+title: "The Caveman Case Against LLMs Reaching AGI"
+description: "A not-very-serious framing of some very real architectural limitations. Four caveman metaphors, the actual math behind them, and why I still wouldn't bet the house on 'never.'"
+date: "2026-04-18"
+tags: ["AI", "LLMs", "Opinion"]
+published: true
+---
+
+## The setup
+
+I've been thinking about this a lot. Not in a "hot take on Twitter" way, more in a "I keep running into the same walls at work and in my coursework and they all point the same direction" way.
+
+The question is simple: can LLMs, as they're currently architected, reach AGI?
+
+My answer right now is **probably not**. But I want to be honest about the uncertainty too. So here's my attempt at laying it out. I'm going to use caveman metaphors because they stuck in my head after I wrote them in my notes and I think they actually communicate the ideas better than the jargon does.
+
+## Brain is Rock
+
+**The caveman version:** Learn before hunt. Cannot learn *during* hunt. Tiger bite, machine not adapt. Must wait for shaman update later.
+
+**What this actually means:** Modern LLMs are frozen after training. Once the weights are set, the model can't update itself based on new experiences during inference. If it makes a mistake, it can't "learn" from it in real time. It has to wait for a full retraining or fine-tuning cycle.
+
+This is a big deal. Humans learn continuously. You touch a hot stove once and your behavior changes permanently in that moment. An LLM touches the hot stove, responds incorrectly, and then does the exact same thing next time unless someone retrains it.
+
+In-context learning (stuffing examples into the prompt) helps, but it's not the same thing. It's a workaround, not actual plasticity. The weights don't change. The model isn't *learning*, it's pattern-matching on a longer input.
+
+**Why it matters for AGI:** Any system that can't adapt its core knowledge on the fly is fundamentally reactive. It can simulate adaptation, but it can't actually do it. That's a meaningful difference once you start talking about general intelligence.
+
+## Need See Thousand Deer
+
+**The caveman version:** Baby see one deer, know all deer. Machine must watch thousand deer before know what deer is. No thousand deer? No learn.
+
+**What this actually means:** Sample inefficiency. LLMs need enormous amounts of high-quality data on a topic before they can do anything useful with it. If that data doesn't exist in sufficient quantity, the model simply can't learn the thing. It's not a training bug, it's how the whole approach works.
+
+Humans are absurdly sample-efficient by comparison. A kid sees one giraffe at the zoo and knows what a giraffe is forever. You have one bad experience trusting someone and your entire model of social trust updates. You watch someone solve a Rubik's cube once and you at least have a framework for attempting it yourself.
+
+LLMs can't do any of that. They need thousands or millions of examples to learn a pattern, and the examples need to already exist in text form. Which means there are entire categories of knowledge that are hard or impossible for them to pick up. Think about things like navigating a new city by feel, reading the energy of a room, knowing when someone is about to quit their job before they say anything, or learning a niche craft that only a handful of people in the world practice and none of them wrote a blog post about it. That knowledge exists in the world but not in the training data. And if it's not in the training data, it doesn't exist to the model.
+
+**Why it matters for AGI:** General intelligence means being able to learn new things from limited experience. One example, one demonstration, one mistake. The current paradigm requires the opposite: massive, pre-existing datasets for every capability. That's a fundamental mismatch. You can't brute-force your way to generality if your learning method requires a firehose of examples for every new skill.
+
+## Head Too Small
+
+**The caveman version:** Remember now, forget yesterday. Look at old cave painting to remember, but painting lose detail. Not real memory.
+
+**What this actually means:** Working memory is limited to a fixed context window. Even with longer contexts (128k, 1M tokens, whatever the number is this month), it's still a finite buffer. And retrieval-augmented generation, the "cave paintings," is just search. You're fetching relevant snippets and hoping they contain what you need. It's a lossy approximation of knowledge, not an integrated memory of lived experience.
+
+I work with RAG systems at my job. They're useful. They're also fragile. The retrieval step can miss things, return irrelevant chunks, or surface information without the surrounding context that makes it meaningful. It works well enough for most product use cases, but it's a long way from how human memory actually operates.
+
+**Why it matters for AGI:** General intelligence requires integrating knowledge across time, domains, and abstraction levels. A context window is a sliding window over tokens. RAG is keyword/embedding search over documents. Neither of those is memory in the way that matters.
+
+## Spill the Water
+
+**The caveman version:** Head is full bowl. Learn make fire, spill out how throw spear. Cannot mix old thought with new thought to make better tool.
+
+**What this actually means:** Catastrophic forgetting. The stability-plasticity dilemma. When you fine-tune a model to learn new information, the weight updates often overwrite previously learned capabilities. The model gets better at the new thing and worse at the old thing.
+
+This is well-documented in the literature and it's one of the reasons why fine-tuning is done so carefully with low learning rates, LoRA adapters, and careful evaluation suites. The underlying problem hasn't been solved though. The architecture makes it hard to *add* knowledge without *displacing* other knowledge.
+
+**Why it matters for AGI:** A generally intelligent system needs to accumulate knowledge over time without losing what it already knows. Humans do this naturally (mostly). Neural networks, at least transformer-based ones, struggle with it fundamentally. You can engineer around it, but the failure mode is baked into how gradient updates work on a fixed-size parameter space.
+
+## Eat Own Poop
+
+**The caveman version:** Read all human cave walls. No new walls left. Start copying own drawings. Drawings get blurry. Machine go crazy.
+
+**What this actually means:** Model collapse. As LLM-generated content floods the internet, newer models end up training on the output of previous models. This creates a feedback loop. Each generation of synthetic data is a slightly degraded copy of the original human-generated data. Over iterations, the distribution narrows, errors amplify, and the tails of the original distribution (the weird, creative, novel stuff) get clipped.
+
+There's a real paper on this: Shumailov et al. showed that iterative training on model-generated data leads to progressive degradation. The diversity of the original training distribution collapses.
+
+This one is more of a practical scaling problem than a pure architectural limitation, but it matters because the "just scale it up" argument for AGI assumes you can keep feeding models more and better data. If the data supply is increasingly contaminated by model outputs, that assumption breaks.
+
+**Why it matters for AGI:** The path to AGI through pure scaling requires a functionally unlimited supply of high-quality, diverse training data. That supply is getting polluted. The models are, quite literally, eating their own output and getting worse for it.
+
+## So why do I still hedge?
+
+Because I've been wrong before about what neural networks can and can't do. Everyone has.
+
+A few honest counterpoints:
+
+**Grokking is weird.** There's this phenomenon where models suddenly generalize long after they've memorized the training data. The loss plateaus, nothing interesting is happening, and then the model just... figures it out. Jumps from memorization to actual generalization. The theory behind why this happens is still being worked out, but it suggests there might be phase transitions in capability that we can't predict from smooth scaling curves.
+
+**In-context learning keeps getting better.** It's not real plasticity, but the gap between "pattern matching on a longer prompt" and "actual learning" keeps shrinking in practice, even if it's still there in theory. Models are getting scarily good at adapting within a single conversation.
+
+**Architecture isn't destiny.** The transformer is a specific architecture. It has specific limitations. But the field moves fast. Mixture-of-experts, state-space models, hybrid architectures with external memory, neurosymbolic approaches... someone might figure out how to bolt real plasticity onto a foundation model in a way that sidesteps these critiques entirely.
+
+**Emergence is hard to predict.** Every few months, a model does something nobody expected it to do at that scale. It's hard to draw a firm line at "this architecture will never do X" when the goalposts keep moving.
+
+## Where I actually land
+
+I side with the math, for now. These aren't bugs you can patch. They're properties of how transformers and large-scale pretraining work. You can engineer around them with RAG, fine-tuning, chain-of-thought, tool use, and those workarounds produce genuinely useful systems. I build them at work. I like building them.
+
+But useful and general are different things. And I think the gap between "really impressive at specific tasks" and "generally intelligent" is bigger than the current vibe online suggests.
+
+I'm also not making any confident 10-year predictions. I've been studying this stuff long enough to know that confident predictions about AI age like milk. Maybe someone cracks continual learning at scale. Maybe grokking turns out to be way more fundamental than anyone thinks. Maybe some totally different architecture shows up next year and makes all five of these points irrelevant.
+
+I just think the honest default bet right now is "not with this architecture." But hey, if a transformer wakes up tomorrow and proves me wrong, I'll be the first to welcome our new overlord. Probably while asking it to help me debug a CUDA kernel.

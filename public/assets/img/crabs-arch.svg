@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" style="background:#282828">
+  <style>
+    text { font-family: sans-serif; }
+    .title { fill: #fe8019; font-size: 28px; font-weight: bold; }
+    .emoji { font-size: 36px; }
+    .box { rx: 12; fill: #3c3836; stroke: #504945; stroke-width: 2; }
+    .box-accent { rx: 12; fill: #3c3836; stroke: #fe8019; stroke-width: 2; }
+    .label { fill: #ebdbb2; font-size: 14px; text-anchor: middle; font-weight: 600; }
+    .sublabel { fill: #a89984; font-size: 11px; text-anchor: middle; }
+    .arrow { stroke: #a89984; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+    .arrow-accent { stroke: #fe8019; stroke-width: 2; fill: none; marker-end: url(#arrowhead-accent); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#a89984"/>
+    </marker>
+    <marker id="arrowhead-accent" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fe8019"/>
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="45" text-anchor="middle" class="title">🦀 crabs</text>
+  <text x="400" y="70" text-anchor="middle" class="sublabel">personal AI assistant architecture</text>
+
+  <!-- Obsidian -->
+  <rect x="30" y="110" width="160" height="70" class="box"/>
+  <text x="110" y="142" class="label">📝 Obsidian</text>
+  <text x="110" y="162" class="sublabel">vault / second brain</text>
+
+  <!-- CouchDB -->
+  <rect x="30" y="230" width="160" height="70" class="box"/>
+  <text x="110" y="262" class="label">🛋️ CouchDB</text>
+  <text x="110" y="282" class="sublabel">LiveSync replication</text>
+
+  <!-- VPS -->
+  <rect x="270" y="170" width="260" height="160" class="box-accent"/>
+  <text x="400" y="200" class="label">Hetzner VPS</text>
+  
+  <!-- LightRAG inside VPS -->
+  <rect x="290" y="215" width="100" height="50" class="box"/>
+  <text x="340" y="237" class="label" style="font-size:12px">LightRAG</text>
+  <text x="340" y="252" class="sublabel" style="font-size:10px">knowledge graph</text>
+  
+  <!-- Gemma inside VPS -->
+  <rect x="410" y="215" width="100" height="50" class="box"/>
+  <text x="460" y="237" class="label" style="font-size:12px">Gemma 4</text>
+  <text x="460" y="252" class="sublabel" style="font-size:10px">31b-it reasoning</text>
+
+  <!-- Memory inside VPS -->
+  <rect x="290" y="280" width="220" height="35" class="box"/>
+  <text x="400" y="302" class="label" style="font-size:12px">🧠 two-tiered memory (RAM + vault)</text>
+
+  <!-- Discord -->
+  <rect x="610" y="210" width="160" height="70" class="box"/>
+  <text x="690" y="242" class="label">💬 Discord</text>
+  <text x="690" y="262" class="sublabel">user interface</text>
+
+  <!-- Devices -->
+  <rect x="610" y="370" width="160" height="70" class="box"/>
+  <text x="690" y="402" class="label">📱 💻 Devices</text>
+  <text x="690" y="422" class="sublabel">anywhere access</text>
+
+  <!-- Arrows -->
+  <line x1="110" y1="180" x2="110" y2="228" class="arrow"/>
+  <line x1="192" y1="265" x2="268" y2="250" class="arrow"/>
+  <line x1="192" y1="145" x2="268" y2="200" class="arrow"/>
+  <line x1="532" y1="250" x2="608" y2="250" class="arrow-accent"/>
+  <line x1="690" y1="282" x2="690" y2="368" class="arrow"/>
+</svg>
