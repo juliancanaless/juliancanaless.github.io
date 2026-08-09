@@ -32,18 +32,6 @@ export type ProjectItem = {
   lessons: string[];
 };
 
-export type SkillItem = {
-  name: string;
-  level: number;
-};
-
-export type SkillGroup = {
-  title: string;
-  badge?: string;
-  badgeTone?: "top" | "learning";
-  items: SkillItem[];
-};
-
 export type GalleryItem = {
   src: string;
   alt: string;
@@ -54,8 +42,6 @@ export const navItems: NavItem[] = [
   { href: "#about", label: "About" },
   { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Projects" },
-  { href: "#skills", label: "Skills" },
-  { href: "/blog", label: "Blog" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -63,12 +49,12 @@ export const currentFocusItems: CurrentFocusItem[] = [
   {
     title: "Work",
     description:
-      "Building agent systems, microservices, and full-stack product work at Avathon. Mostly AI infrastructure, retrieval pipelines, and platform engineering.",
+      "AI engineer at Avathon. I own the agent platform behind the conversational AI product, the knowledge graph it reads, and the evaluation that keeps its answers correct.",
   },
   {
     title: "UT Austin OMSAI",
     description:
-      "B.S. in CS & Math from UT Austin, now doing the online MS in AI part-time while working full-time. Currently taking Online Learning & Optimization and Deep Learning.",
+      "B.S. in CS & Math from UT Austin, now doing the online MS in AI part-time while working full-time. Currently taking AI in Astrophysics.",
   },
   {
     title: "Gym, tennis & cycling",
@@ -87,16 +73,19 @@ export const experiences: ExperienceItem[] = [
     company: "Avathon",
     logo: "/assets/img/avathon.jpeg",
     logoAlt: "Avathon logo",
-    title: "Data Scientist",
+    title: "AI Engineer",
     timeline: "Oct 2025 – Present",
     summary:
-      "Working across AI infrastructure, internal tools, full-stack systems, and platform decisions — a lot more engineering-heavy than a pure data science role.",
+      "I build the harness agents run inside: the tools they call, the enterprise knowledge graph they read, and the evaluation that keeps them correct — wired together into a multi-tenant platform running in production.",
     bullets: [
-      "Built AI-oriented microservices and agent workflows for internal infrastructure, focusing on making systems useful, reliable, and easier to extend.",
-      "Created agent experiences over Avathon's proprietary computational knowledge graph, including retrieval patterns, embeddings-based workflows, and querying interfaces that made the graph significantly more usable.",
-      "Worked full-stack on a transport management system, especially around resource-selection configuration flows and the operational logic behind them.",
-      "Pitched using DBOS for workflow durability and orchestration, and helped move that idea into practice.",
-      "Currently working on more AI infrastructure, including Langfuse integration, while continuing to pick up stronger instincts around microservices, frontend architecture, and day-to-day DevOps realities.",
+      "Built the knowledge-graph agent behind the Barrick Gold engagement, working directly with client leadership to shape what they valued. It anchored a multi-year enterprise contract now in production.",
+      "Extracted the company's conversational AI from a product monolith into a standalone multi-tenant agent platform (Django async ASGI, LangGraph, LiteLLM gateway) and shipped it through dev, UAT and production for a Fortune-500 deployment. It's now the company's shared agent layer.",
+      "Replaced config-trusted persona scoping with authorization enforced against live identity (Keycloak/OIDC), clearing the last blocker to general availability. Added drop-in MCP server support with per-server isolation and forwarded user tokens, so new tool servers go live by configuration with no code and no deploy.",
+      "Designed and materialized the canonical ontology behind the agent's answers, modeling 28.7M rows of client data into an agent-queryable knowledge graph, plus the operations layer that verifies freshness and correctness and runs dependency-ordered recompute.",
+      "Own agent quality with no dedicated QA function on the team: built the evaluation and observability stack (Langfuse, per-query cost/latency/token telemetry) and run continuous evals scoring answer correctness and tool-call trajectory across 16 identity-gated personas.",
+      "Fine-tuned Qwen2.5-14B (QLoRA) for natural-language-to-graph-query translation on 1,232 execution-verified pairs, reaching parity with Claude Sonnet on single-query generation at a fraction of per-query API cost.",
+      "Built the carrier scoring and tendering engine for the supply-chain product, separating metric computation from decision policy. Drove adoption of DBOS over Celery+Redis for crash recovery and audit trails.",
+      "Rebuilt and shipped avathon.com in two weeks (Next.js, Sanity CMS) with the VPs of Strategic Sales and Marketing and a peer engineer.",
     ],
   },
   {
@@ -106,8 +95,8 @@ export const experiences: ExperienceItem[] = [
     title: "Data Science Intern",
     timeline: "May 2023 – Aug 2023",
     bullets: [
-      "Built and deployed a Flask proof of concept integrating Watson Assistant with Db2, helping close a client deal.",
-      "Created a 1.5k-line Dash app using watsonx, Discovery, and a custom evaluation API for LLM comparisons.",
+      "Built and deployed a Flask proof of concept integrating Watson Assistant with Db2, used in the pitch that won the client engagement.",
+      "Shipped a Dash application on watsonx and Watson Discovery with a custom evaluation API for side-by-side LLM comparison.",
       "Owned backend API integration for a React and Flask onboarding MVP on IBM Cloud and OpenShift.",
     ],
   },
@@ -118,7 +107,7 @@ export const experiences: ExperienceItem[] = [
     title: "Undergraduate Researcher — Earthquake Modeling",
     timeline: "Jan 2024 – May 2024",
     bullets: [
-      "Re-engineered a legacy Mathematica SDOF solver into a multithreaded Python pipeline.",
+      "Re-engineered a legacy Mathematica seismic-response solver into a multithreaded Python pipeline.",
       "Processed 29k+ NGA West2 records and ran 64-vCPU GCP sweeps, cutting runtime from roughly 3 years to about 2 weeks.",
       "Produced interactive Plotly dashboards and a seminar deck for faculty presentation.",
     ],
@@ -266,44 +255,12 @@ export const education = {
     "Geometric Foundations of Data Science, Quantum Information Science",
     "Real Analysis I & II, Stochastic Processes I (Graduate), Predictive Analytics",
     "Online Learning and Optimization",
-    "Deep Learning",
+    "Deep Learning, Advances in Deep Learning",
+    "Reinforcement Learning, AI in Astrophysics",
   ],
   statement:
     "Coursework still matters to me because it gives me sharper mental models for the engineering decisions I make in practice. I like being able to connect systems intuition with real theory instead of treating them as separate worlds.",
 };
-
-export const skillGroups: SkillGroup[] = [
-  {
-    title: "AI Systems & Agent Engineering",
-    items: [
-      { name: "LLM workflows and agent tooling", level: 4 },
-      { name: "AI eval / tracing / observability", level: 2 },
-      { name: "Embeddings and retrieval systems", level: 3 },
-      { name: "Prompting and tool orchestration", level: 5 },
-      { name: "Python services for AI products", level: 4 },
-    ],
-  },
-  {
-    title: "Full-Stack & Platform Engineering",
-    items: [
-      { name: "TypeScript / modern web UI", level: 2 },
-      { name: "React / component-based frontend", level: 3 },
-      { name: "APIs and microservices", level: 4 },
-      { name: "System integration and workflow design", level: 4 },
-      { name: "DevOps / deployment debugging", level: 3 },
-    ],
-  },
-  {
-    title: "ML / Systems Foundations",
-    items: [
-      { name: "PyTorch / deep learning", level: 2 },
-      { name: "RL and sequential decision making", level: 4 },
-      { name: "CUDA & parallel programming", level: 3 },
-      { name: "Probability & mathematical foundations", level: 4 },
-      { name: "Optimization mindset", level: 5 },
-    ],
-  },
-];
 
 export const galleryItems: GalleryItem[] = [
   {

@@ -1,28 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectShowcase } from "@/components/project-showcase";
-import { getRecentPosts } from "@/lib/blog";
 import {
   currentFocusItems,
   experiences,
   galleryItems,
   navItems,
   projects,
-  skillGroups,
   socialLinks,
 } from "@/data/site";
 
-const starText = (level: number): string => "★".repeat(level) + "☆".repeat(5 - level);
-
-const groupAccents = [
-  { border: "border-gb-orange/20", bg: "from-gb-orange/10", bar: "from-gb-orange to-gb-orange-l" },
-  { border: "border-gb-green-l/20", bg: "from-gb-green-l/10", bar: "from-gb-green-l to-gb-green" },
-  { border: "border-gb-yellow-l/20", bg: "from-gb-yellow-l/10", bar: "from-gb-yellow-l to-gb-yellow" },
-];
-
 export default function Home() {
-  const recentPosts = getRecentPosts(3);
-
   return (
     <div className="pb-16">
       <header className="section-shell sticky top-0 z-50 pt-4">
@@ -58,7 +46,7 @@ export default function Home() {
               <div className="mt-6 max-w-3xl rounded-3xl border border-gb-fg4/15 bg-gb-bg1/60 p-6 text-lg leading-8 text-gb-fg2 sm:text-xl">
                 <p className="font-semibold text-gb-fg0">My general vibe:</p>
                 <ul className="mt-4 space-y-3">
-                  <li className="flex gap-3"><span className="text-gb-orange-l">•</span><span>AI power user. Zellij, Pi, Helix, Zed, and too many agent windows open at once.</span></li>
+                  <li className="flex gap-3"><span className="text-gb-orange-l">•</span><span>AI power user. Zellij, Pi, Claude, Zed, and too many agent windows open at once.</span></li>
                   <li className="flex gap-3"><span className="text-gb-orange-l">•</span><span>Into AI infra, full-stack stuff, and making systems robust enough to just work.</span></li>
                   <li className="flex gap-3"><span className="text-gb-orange-l">•</span><span>Quite studious and active.</span></li>
                 </ul>
@@ -78,12 +66,14 @@ export default function Home() {
                 >
                   Connect on LinkedIn
                 </a>
-                <Link
-                  href="/blog"
+                <a
+                  href={socialLinks.github}
+                  target="_blank"
+                  rel="noreferrer"
                   className="rounded-full border border-gb-fg4/20 px-5 py-3 font-medium text-gb-fg0 hover:bg-gb-fg4/10"
                 >
-                  Read the blog
-                </Link>
+                  See the code
+                </a>
               </div>
             </div>
 
@@ -191,65 +181,13 @@ export default function Home() {
           <ProjectShowcase projects={projects} />
         </section>
 
-        <section id="skills" className="section-shell section-gap">
-          <h2 className="section-heading">Skills</h2>
-          <p className="section-copy">
-            How I'd rate my skills... honestly.
-          </p>
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {skillGroups.map((group, gi) => {
-              const accent = groupAccents[gi % groupAccents.length];
-              return (
-                <article
-                  key={group.title}
-                  className={`rounded-3xl border ${accent.border} bg-gradient-to-br ${accent.bg} via-white/5 to-transparent p-6 shadow-2xl shadow-gb-bg0/40 backdrop-blur`}
-                >
-                  <h3 className="text-xl font-semibold text-gb-fg0">{group.title}</h3>
-                  <ul className="mt-6 space-y-3">
-                    {group.items.map((item) => (
-                      <li key={item.name} className="rounded-2xl border border-gb-fg4/15 bg-gb-bg1/60 px-4 py-3">
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="text-sm font-medium text-gb-fg2">{item.name}</span>
-                          <span className="text-xs tabular-nums text-gb-fg4">{item.level}/5</span>
-                        </div>
-                        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                          <div
-                            className={`h-full rounded-full bg-gradient-to-r ${accent.bar}`}
-                            style={{ width: `${(item.level / 5) * 100}%` }}
-                          />
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              );
-            })}
-          </div>
-        </section>
-
         <section className="section-shell section-gap">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <article className="glass-card p-6 sm:p-8">
-              <h2 className="text-3xl font-semibold text-gb-fg0">Writing, notes, and other thoughts</h2>
-              <div className="mt-8 space-y-4">
-                {recentPosts.map((post) => (
-                  <Link
-                    key={post.slug}
-                    href={`/blog/${post.slug}`}
-                    className="block rounded-2xl border border-gb-fg4/15 bg-gb-bg1/60 p-5 hover:border-gb-orange-l/30 hover:bg-gb-bg1"
-                  >
-                    <p className="text-sm text-gb-fg4">{post.date}</p>
-                    <h3 className="mt-2 text-xl font-semibold text-gb-fg0">{post.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-gb-fg2">{post.description}</p>
-                  </Link>
-                ))}
-              </div>
-              <Link
-                href="/blog"
-                className="mt-6 inline-flex rounded-full border border-gb-fg4/20 px-4 py-2 text-sm font-medium text-gb-fg0 hover:bg-gb-fg4/10"
-              >
-                View all posts
-              </Link>
+            <article className="glass-card flex flex-col justify-center p-6 sm:p-8">
+              <h2 className="text-3xl font-semibold text-gb-fg0">Writing</h2>
+              <p className="mt-4 text-gb-fg2">
+                Substack coming soon.
+              </p>
             </article>
 
             <article id="hobbies" className="glass-card p-6 sm:p-8">
