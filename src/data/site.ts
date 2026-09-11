@@ -76,7 +76,7 @@ export const experiences: ExperienceItem[] = [
     title: "AI Engineer",
     timeline: "Oct 2025 – Present",
     summary:
-      "I build the harness agents run inside: the tools they call, the enterprise knowledge graph they read, and the evaluation that keeps them correct — wired together into a multi-tenant platform running in production.",
+      "I work the messy part between a base model and a shipped agent: post-training, tools, evals.",
     bullets: [
       "Built the knowledge-graph agent behind the Barrick Gold engagement, working directly with client leadership to shape what they valued. It anchored a multi-year enterprise contract now in production.",
       "Extracted the company's conversational AI from a product monolith into a standalone multi-tenant agent platform (Django async ASGI, LangGraph, LiteLLM gateway) and shipped it through dev, UAT and production for a Fortune-500 deployment. It's now the company's shared agent layer.",
